@@ -60,13 +60,14 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (senha1.getText().toString().equals(senha2.getText().toString())) {
+                if ((senha1.getText().toString().equals(senha2.getText().toString())) && (email.getText().length() != 0) && (senha1.getText().length() != 0) && (senha2.getText().length() != 0) ){
                     usuario = new Usuario();
 
                     usuario.setEmail(email.getText().toString());
                     usuario.setSenha(senha1.getText().toString());
                     usuario.setNome(nome.getText().toString());
 
+                    //se o RadioButtom administrador foi escolhido execute o que ha abaixo
                     if (Rbadmin.isChecked()) {
                         usuario.setTipoUsuario("Administrador");
                     } else if (Rbatend.isChecked()) {
@@ -76,15 +77,23 @@ public class CadastroActivity extends AppCompatActivity {
                     cadastrarUsuario();
 
                 }else{
-
+                    Toast.makeText(CadastroActivity.this, "As senhas não se correspondem ou campos não preenchido!!!", Toast.LENGTH_LONG).show();
+                }
             }
+        });
 
-                Toast.makeText(CadastroActivity.this, "As senhas não se correspondem!", Toast.LENGTH_LONG).show();
 
+
+        //Quando esse botao for clicado, ira para tela principalActivity
+        btncancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(CadastroActivity.this, principalActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
-
 
     private void cadastrarUsuario() {
 
@@ -119,14 +128,9 @@ public class CadastroActivity extends AppCompatActivity {
                     }
 
                     Toast.makeText(CadastroActivity.this, "Erro: " + erroExcecao, Toast.LENGTH_LONG).show();
-
                 }
-
-
             }
         });
-
-
     }
 
     private boolean insereUsuario(Usuario usuario) {
@@ -137,7 +141,6 @@ public class CadastroActivity extends AppCompatActivity {
             reference.push().setValue(usuario);
             Toast.makeText(CadastroActivity.this, "Usuario cadastrado com sucesso!", Toast.LENGTH_LONG).show();
             return true;
-
 
         } catch (Exception e) {
             Toast.makeText(CadastroActivity.this, "Erro ao gravar o Usuario!", Toast.LENGTH_LONG).show();

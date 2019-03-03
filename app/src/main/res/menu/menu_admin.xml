@@ -14,6 +14,12 @@
         android:title="Desconectar"
         app:showAsAction="collapseActionView"></item>
 
+    <item
+        android:id="@+id/action_alert"
+        android:orderInCategory="1000"
+        android:title="Mais informações"
+        app:showAsAction="collapseActionView"></item>
+
 
 
 </menu>

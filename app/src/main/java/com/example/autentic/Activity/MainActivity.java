@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtSenhaLogin;
     private Button   btnLogin;
     private Button   btnCancelar;
+    private Button   btncadastrese;
     private Usuario usuario;
 
 
@@ -37,35 +39,39 @@ public class MainActivity extends AppCompatActivity {
         edtSenhaLogin = (EditText) findViewById(R.id.edtsenha);
         btnLogin      = (Button)   findViewById(R.id.btncadastro);
         btnCancelar   = (Button)   findViewById(R.id.btncancelar);
+        btncadastrese = (Button)   findViewById(R.id.btncadastrese);
 
-        if(UsuarioLogado()){
+        btncadastrese.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CadastroActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-            Intent intentMinhaConta =  new Intent(MainActivity.this, principalActivity.class);
-            abrirActivity(intentMinhaConta);
-            finish();
 
-        }else {
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    if (!edtEmailLogin.getText().toString().equals("") && !edtSenhaLogin.getText().toString().equals("")) {
+                if(!edtEmailLogin.getText().toString().equals("") && !edtSenhaLogin.getText().toString().equals("")){
 
-                        usuario = new Usuario();
+                    usuario  = new Usuario();
 
-                        usuario.setEmail(edtEmailLogin.getText().toString());
-                        usuario.setSenha(edtSenhaLogin.getText().toString());
+                    usuario.setEmail(edtEmailLogin.getText().toString());
+                    usuario.setSenha(edtSenhaLogin.getText().toString());
 
-                        ValidarLogin();
+                    ValidarLogin();
 
-                    } else {
-                        Toast.makeText(MainActivity.this, "Preencha os campos de E-mail e Senha!", Toast.LENGTH_SHORT).show();
-                    }
+                }else{
+                    Toast.makeText(MainActivity.this, "Preencha os campos de E-mail e Senha!", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
+        });
 
     }
+
 
 
     private void ValidarLogin(){
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(task.isSuccessful()){
 
-                    abrirTelaPrincipal();
+                    abrirTelaAdministrador();
 
                     Toast.makeText(MainActivity.this, "Login efetuado com sucesso!", Toast.LENGTH_SHORT).show();
                     edtEmailLogin.setText("");
@@ -95,25 +101,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private  void abrirTelaPrincipal(){
+    private  void abrirTelaAdministrador(){
 
         Intent intent = new Intent(MainActivity.this, principalActivity.class);
         startActivity(intent);
         finish();
-    }
 
-    public boolean UsuarioLogado(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user != null){
-            return  true;
-        }else {
-            return false;
-        }
-    }
-
-    public void abrirActivity(Intent intent){
-        startActivity(intent);
     }
 
 }

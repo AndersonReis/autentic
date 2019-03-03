@@ -25,7 +25,10 @@
         android:layout_width="match_parent"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+        <requestFocus/>
+    </EditText>
+
 
     <EditText
         android:id="@+id/edtsenha"
@@ -40,13 +43,22 @@
         android:layout_height="wrap_content"
         android:text="LOGIN"/>
 
-    <TextView
-        android:textSize="10sp"
+
+    <Button
+        android:id="@+id/btncadastrese"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Desenvolvido por Anderson Reis - Versao 1.0"
-        android:textAlignment="center"
-        />
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="cadastre - se"/>
+
+    <Button
+        android:id="@+id/btnQrCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:text="Leitor QR-CODE"/>
+
+
 
 
 
